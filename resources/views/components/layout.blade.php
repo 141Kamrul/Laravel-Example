@@ -1,22 +1,41 @@
-<html>
+<html class="h-full bg-gray-100">
     <head>
         <script src="https://cdn.tailwindcss.com"></script>
     </head>
-    <body>
+    <body class="h-full bg-red-200">
+        @props([
+            'type' => 'a',
+            'active' => false,
+            'href' => null
+        ])
+
+        <!-- @if ($type === 'a')
+        <a {{ $attributes->merge(['href' => $href, 'class' => $active ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white']) }}>
+            {{ $slot }}
+        </a>
+        @else
+        <button {{ $attributes->merge(['class' => $active ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white']) }}>
+            {{ $slot }}
+        </button>
+        @endif -->
+
+        <!-- Component Usage -->
         <nav>
-            <!-- <a href="/example/laravel/public/home">Home</a>
-            <a href="/example/laravel/public/about">About</a>
-            <a href="/example/laravel/public/contact">Contact</a> -->
-            <x-navlink href="/example/laravel/public/home">Home</x-navlink>
-            <x-navlink href="/example/laravel/public/about" style="color: green;">About</x-navlink>
-            <x-navlink href="/example/laravel/public/contact">Contact</x-navlink>
+            <x-navlink href="/home" :active="request()->is('home')">
+                Home
+            </x-navlink>
+            <x-navlink href="/about" :active="request()->is('about')">
+                About
+            </x-navlink>
+            <x-navlink type="button" href="/contact" :active="request()->is('contact')">
+                Contact
+            </x-navlink>   
         </nav>
-        <h1>
-                {{ $heading }}
-        </h1>
+        
+        <h1>{{ $heading }}</h1>
+        
         <main>
-            {{   $slot  }}
+            {{ $slot }}
         </main>
-        <!-- <?php echo $slot; ?> -->
     </body>
 </html>
