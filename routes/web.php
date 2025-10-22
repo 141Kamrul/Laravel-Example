@@ -61,3 +61,15 @@ Route::get('jobs/{id}', function($id){
     $job=Job::find($id);
     return view('job',['job'=>$job]);
 });
+
+Route::get('/job', function(){
+
+    dd(([
+        'all_jobs'=> Job::all(),
+        'first_title'=> Job::all()[0]->title ?? null,
+        
+    ]));
+    // dd(Job::all());
+    // dd(Job::all()[0]->title);
+    // dd(Job::find(1)->title);
+});
