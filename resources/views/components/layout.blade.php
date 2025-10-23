@@ -29,7 +29,11 @@
             </x-navlink>
             <x-navlink type="button" href="/contact" :active="request()->is('contact')">
                 Contact
-            </x-navlink>   
+            </x-navlink>  
+            <x-navlink href="/jobs" :active="request()->is('jobs')">
+                Job
+            </x-navlink> 
+            
         </nav>
         
         <h1>{{ $heading }}</h1>
