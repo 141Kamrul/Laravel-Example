@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Models\Job;
 use App\Models\User;
 use App\Models\Employer;
+use App\Models\Tag;
 
 Route::get('/', function () {
     return view('welcome');
@@ -62,7 +63,9 @@ Route::get('/jobs', function () {
 Route::get('jobs/{id}', function($id){
     $job=Job::find($id);
     $employer=$job->employer;
-    return view('job',['job'=>$job,'employer'=>$employer]);
+    $job->tags()->syncWithoutDetaching([6]);
+    $tags=$job->tags;
+    return view('job',['job'=>$job,'employer'=>$employer, 'tags'=> $tags]);
 });
 
 Route::get('/job', function(){
@@ -87,3 +90,15 @@ Route::get('/employers/{id}', function($id){
     $jobs=$employer->jobs;
     return view('employer',['employer'=>$employer, 'jobs'=>$jobs]);
 });
+
+Route::get('/tags', function() {
+    $tags=Tag::all();
+    return view('tags', ['tags'=>$tags]);  
+});
+
+Route::get('tags/{id}', function($id){
+    $tag=Tag::find($id);
+    $jobs=$tag->jobs;
+    return view('tag',['tag'=>$tag, 'jobs'=> $jobs]);
+});
+

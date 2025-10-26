@@ -33,6 +33,9 @@
             <x-navlink href="/jobs" :active="request()->is('jobs')">
                 Job
             </x-navlink> 
+            <x-navlink href="/tags" :active="request()->is('tags')">
+                Tag
+            </x-navlink> 
             <x-navlink href="/employers" :active="request()->is('employers')">
                 Employer
             </x-navlink> 
