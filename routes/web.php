@@ -56,7 +56,7 @@ Route::get('/foo', function() {
 // });
 
 Route::get('/jobs', function () {
-    $jobs=Job::with('employer')->get();
+    $jobs=Job::with('employer')->cursorPaginate(1);
     $employers=$jobs->pluck('id')->filter()->unique('id')->values();
     return view('jobs', ['jobs'=>$jobs, 'employers'=> $employers]);
 });
