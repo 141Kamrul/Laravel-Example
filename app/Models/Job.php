@@ -1,11 +1,13 @@
 <?php
 namespace App\Models; 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Arr;
 use Illuminate\Database\Eloquent\Model;
 
 class Job extends Model{
 
-    protected $fillable = ['title', 'salary'];
+    use HasFactory;
+    protected $fillable = ['title', 'salary', 'employer_id'];
     protected $table = "job_listings";
     // public static function all(): array
     // {
@@ -19,4 +21,8 @@ class Job extends Model{
     // public  static function find(int $id): ?array{
     //     return  Arr::first(self::all(), fn($job) => $job['id']==$id);
     // }
+
+    public function employer(){
+        return $this->belongsTo(Employer::class);
+    }
 }

@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Models\Job;
+use App\Models\User;
+use App\Models\Employer;
 
 Route::get('/', function () {
     return view('welcome');
@@ -59,7 +61,8 @@ Route::get('/jobs', function () {
 
 Route::get('jobs/{id}', function($id){
     $job=Job::find($id);
-    return view('job',['job'=>$job]);
+    $employer=$job->employer;
+    return view('job',['job'=>$job,'employer'=>$employer]);
 });
 
 Route::get('/job', function(){
@@ -72,4 +75,15 @@ Route::get('/job', function(){
     // dd(Job::all());
     // dd(Job::all()[0]->title);
     // dd(Job::find(1)->title);
+});
+
+Route::get('/employers', function() {
+    $employers=Employer::all();
+    return view('employers', ['employers'=>$employers]);  
+});
+
+Route::get('/employers/{id}', function($id){
+    $employer=Employer::find($id);
+    $jobs=$employer->jobs;
+    return view('employer',['employer'=>$employer, 'jobs'=>$jobs]);
 });
