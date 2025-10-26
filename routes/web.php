@@ -56,8 +56,9 @@ Route::get('/foo', function() {
 // });
 
 Route::get('/jobs', function () {
-    $jobs=Job::all();
-    return view('jobs', ['jobs'=>$jobs]);
+    $jobs=Job::with('employer')->get();
+    $employers=$jobs->pluck('id')->filter()->unique('id')->values();
+    return view('jobs', ['jobs'=>$jobs, 'employers'=> $employers]);
 });
 
 Route::get('jobs/{id}', function($id){
