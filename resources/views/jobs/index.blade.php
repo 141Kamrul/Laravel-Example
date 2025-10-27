@@ -15,4 +15,5 @@
         </li>
         @endforeach
     </ul>
+    <a href="/jobs/create" class="text-green-500 hover:underline">Create Job</a>
 </x-layout>
