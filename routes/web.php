@@ -6,6 +6,7 @@ use App\Models\Job;
 use App\Models\User;
 use App\Models\Employer;
 use App\Models\Tag;
+use Illuminate\Validation\Validator;
 
 Route::get('/', function () {
     return view('welcome');
@@ -87,6 +88,36 @@ Route::get('/jobs/{id}', function($id){
     $job->tags()->syncWithoutDetaching([6]);
     $tags=$job->tags;
     return view('jobs.show',['job'=>$job,'employer'=>$employer, 'tags'=> $tags]);
+});
+
+Route::get('jobs/{id}/edit',function($id){
+    $job=Job::find($id);
+    if (!$job) {
+        abort(404);
+    }
+    return view('jobs.edit',['job'=>$job]);
+});
+
+Route::patch('jobs/{id}',function(Request $request, $id){
+    $request->validate([
+        'title'=>'required|min:3',
+        'salary'=>'required',
+    ]);
+    
+    $job=Job::findOrFail( $id );
+
+    $job->update([
+        'title'=>$request->input('title'),
+        'salary'=>$request->input('salary'),
+    ]);
+    return redirect("/jobs/{$id}");
+});
+
+Route::delete('/jobs/{id}',function($id){
+    $job=Job::findOrFail( $id );
+    $job->delete();
+
+    return redirect('/jobs');
 });
 
 // Route::get('/job', function(){
